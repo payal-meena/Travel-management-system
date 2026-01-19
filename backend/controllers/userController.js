@@ -1,4 +1,5 @@
 const User = require("../models/User.js");
+const jwt = require("jsonwebtoken");
 
  const SignupUser = async (req, res)=>{
     try{
@@ -23,11 +24,13 @@ const User = require("../models/User.js");
  }
 
 
+
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
 
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -36,15 +39,28 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    // ✅ TOKEN GENERATE
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRE || "7d" }
+    );
+
     res.json({
       success: true,
       message: "Login successful",
-      user: { ...user._doc, password: undefined },
+      token, // 🔥 VERY IMPORTANT
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 /* GET MY PROFILE */
 const getMyProfile = async (req, res) => {
