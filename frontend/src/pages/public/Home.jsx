@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../components/common/Navbar';
-import Footer from '../components/common/Footer';
-import SkillCard from '../components/skills/SkillCard';
+import Navbar from '../../components/common/Navbar';
+import Footer from '../../components/common/Footer';
+import SkillCard from '../../components/skills/SkillCard';
 
 const steps = [
   { id: 1, title: "Request", icon: "search_check", desc: "Browse thousands of skills and send a swap request to experts." },
