@@ -1,5 +1,51 @@
 const User = require("../models/User.js");
 
+ const SignupUser = async (req, res)=>{
+    try{
+        const {name , email,password}= req.body;
+        const exisitingUser = await User.findOne({email})
+        if(exisitingUser){
+            return res.status(400).json({message:"User already exists"})
+        }
+        const user = await User.create({
+            name,
+            email,
+            password
+        })
+        res.status(201).json({
+            success:true,
+            message:"User created successfully",
+            user:user
+        })
+    } catch(error){
+        res.status(500).json({message:error.message})
+    }
+ }
+
+
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (password !== user.password) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.json({
+      success: true,
+      message: "Login successful",
+      user: { ...user._doc, password: undefined },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 /* GET MY PROFILE */
 const getMyProfile = async (req, res) => {
   try {
@@ -89,4 +135,6 @@ module.exports = {
   updateProfile,
   addSkill,
   removeSkill,
+  loginUser,
+  SignupUser
 };
