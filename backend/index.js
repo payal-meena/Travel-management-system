@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+    console.log("Backend Is Running");
+  console.log(`Server is running on port ${port}`);
 });
