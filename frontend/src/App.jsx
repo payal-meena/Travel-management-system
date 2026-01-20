@@ -1,17 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Home from './pages/public/home'
+import { BrowserRouter } from 'react-router-dom'
+// import { AuthProvider } from './context/AuthContext'
+// import { SocketProvider } from './context/SocketContext'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
-
   return (
-    <>
- {/* <Dashboard />   */}
- <Home/> 
- </>
-  )
+    <BrowserRouter>
+      {/* <AuthProvider> */}
+        {/* <SocketProvider> */}
+          <AppRoutes />
+        {/* </SocketProvider> */}
+      {/* </AuthProvider> */}
+    </BrowserRouter>
+  );
 }
 
 export default App
