@@ -12,6 +12,7 @@ import Security from "../pages/settings/Security";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import Explore from "../pages/explore/Explore";
+import Profile from "../pages/profile/Profile";
 
 function AppRoutes() {
   return (
@@ -26,6 +27,8 @@ function AppRoutes() {
         <Route path="/requests" element={<Requests />} />
         <Route path="/messages" element={<MessagesPage />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="my-profile" element={<Profile />} />
+
       </Route>
 
       <Route path="/settings" element={<SettingsLayout />}>
