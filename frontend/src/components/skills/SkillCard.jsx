@@ -1,31 +1,60 @@
 import React from 'react';
 
-const SkillCard = ({ name, wantsToLearn, rating, reviews, level, image, colorClass }) => {
+const MySkillCard = ({ title, level, icon, detail, status, isOffer = true, onEdit, onViewCurriculum, onDelete }) => {
   return (
-    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all group">
-      <div className={`h-32 bg-gradient-to-br ${colorClass} relative`}>
-        <span className="absolute top-4 right-4 bg-background-dark text-primary text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">
-          {level}
-        </span>
-      </div>
-      <div className="p-5 -mt-12">
-        <div className="bg-white dark:bg-background-dark p-1 rounded-full w-fit mb-3">
-          <img src={image} alt={name} className="w-16 h-16 rounded-full object-cover" />
+    <div className={`bg-white dark:bg-[#193322] border ${isOffer ? 'border-slate-200 dark:border-[#23482f]' : 'border-dashed border-slate-200 dark:border-[#23482f]'} rounded-2xl p-5 shadow-sm hover:shadow-md transition-all group font-['Lexend']`}>
+      <div className="flex justify-between items-start mb-4">
+        <div className={`${isOffer ? 'bg-slate-100 dark:bg-[#112217]' : 'bg-primary/5 dark:bg-[#112217]'} p-3 rounded-xl`}>
+          <span className="material-symbols-outlined text-primary text-3xl">{icon}</span>
         </div>
-        <h3 className="text-lg font-bold text-slate-900 dark:text-white">{name}</h3>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">Wants to learn: {wantsToLearn}</p>
-        <div className="flex items-center justify-between mt-4">
-          <div className="flex items-center gap-1 text-yellow-500">
-            <span className="material-symbols-outlined text-sm">star</span>
-            <span className="text-xs font-bold">{rating} ({reviews})</span>
-          </div>
-          <button className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark px-4 py-2 rounded-lg text-xs font-bold transition-all">
-            Swap Now
+        <div className="flex gap-1">
+          <button 
+            onClick={onEdit}
+            className="p-2 text-slate-400 hover:text-primary transition-colors cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-xl">edit</span>
+          </button>
+          <button 
+            onClick={onDelete}
+            className="p-2 text-slate-400 hover:text-red-500 transition-colors cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-xl">delete</span>
           </button>
         </div>
+      </div>
+
+      <h4 className="text-slate-900 dark:text-white font-bold text-lg mb-1">{title}</h4>
+      
+      <div className="flex items-center gap-2 mb-4">
+        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${isOffer ? 'bg-primary/20 text-primary' : 'bg-slate-100 dark:bg-[#23482f] text-slate-600 dark:text-slate-300'}`}>
+          {level}
+        </span>
+        <span className="text-slate-400 dark:text-[#92c9a4] text-xs font-medium">• {detail}</span>
+      </div>
+
+      <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-[#23482f]">
+        <span className={`flex items-center gap-1.5 text-xs font-bold ${status === 'Active' ? 'text-emerald-500' : status === 'Paused' ? 'text-slate-400' : 'text-primary'}`}>
+          {(status === 'Active' || status === 'Paused') && (
+             <span className={`h-1.5 w-1.5 rounded-full ${status === 'Active' ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
+          )}
+          {status}
+        </span>
+        
+        {isOffer ? (
+          <button 
+            className="text-primary text-xs font-bold hover:underline cursor-pointer"
+            onClick={onViewCurriculum} 
+          >
+            View Curriculum
+          </button>
+        ) : (
+          <button className="h-8 w-8 flex items-center justify-center rounded-lg bg-primary text-background-dark hover:scale-105 transition-transform">
+            <span className="material-symbols-outlined text-sm">search</span>
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-export default SkillCard;
+export default MySkillCard;

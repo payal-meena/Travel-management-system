@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, X, CheckCircle2, PlusCircle } from 'lucide-react'; 
 import UserNavbar from '../../components/common/UserNavbar'; 
 import MySkillCard from '../../components/skills/MySkillCard'; 
@@ -6,28 +6,79 @@ import EditSkillModal from '../../components/modals/EditSkillModal';
 import AddSkillModal from '../../components/modals/AddSkillModal'; 
 import CurriculumModal from '../../components/modals/CurriculumModal';
 import EditCurriculumModal from '../../components/modals/EditCurriculumModal';
+import { skillService } from '../../services/skillService';
 
 const MySkills = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isCurriculumOpen, setIsCurriculumOpen] = useState(false);
-  
   const [isEditCurriculumOpen, setIsEditCurriculumOpen] = useState(false);
   const [activeSkillTitle, setActiveSkillTitle] = useState("");
   const [isWantedModalOpen, setIsWantedModalOpen] = useState(false); 
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [targetProficiency, setTargetProficiency] = useState('beginner');
-
-  const offeredSkills = [
-    { title: "UI/UX Design", level: "Advanced", icon: "brush", detail: "12 students taught", status: "Active", description: "Specialized in design systems and user research." },
-    { title: "React Development", level: "Intermediate", icon: "code", detail: "5 students taught", status: "Active", description: "Experienced in building scalable front-end applications." },
-    { title: "Spanish Language", level: "Advanced", icon: "translate", detail: "Native Speaker", status: "Paused", description: "Native speaker from Madrid." },
-  ];
+  const [offeredSkills, setOfferedSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const wantedSkills = [
     { title: "Python Programming", level: "Beginner", icon: "data_object", detail: "3 active matches", status: "Searching for partners" },
     { title: "Piano", level: "Beginner", icon: "piano", detail: "0 matches", status: "Pending verification" },
   ];
+
+  useEffect(() => {
+    fetchMySkills();
+  }, []);
+
+  const fetchMySkills = async () => {
+    try {
+      setLoading(true);
+      const response = await skillService.getMySkills();
+      if (response.success) {
+        const formattedSkills = response.skills.map(skill => ({
+          id: skill._id,
+          title: skill.skillName,
+          level: skill.level,
+          icon: getIconForCategory(skill.catogory),
+          detail: `${skill.experience} years experience`,
+          status: skill.isActive ? "Active" : "Paused",
+          description: skill.description,
+          category: skill.catogory,
+          type: skill.type
+        }));
+        setOfferedSkills(formattedSkills);
+      }
+    } catch (error) {
+      console.error('Error fetching skills:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getIconForCategory = (category) => {
+    const iconMap = {
+      'Design & Creative': 'brush',
+      'Development & IT': 'code',
+      'Languages': 'translate',
+      'Business & Marketing': 'business',
+      'Music & Arts': 'music_note',
+      'Education': 'school'
+    };
+    return iconMap[category] || 'star';
+  };
+
+  const handleSkillAdded = () => {
+    fetchMySkills();
+    setIsAddModalOpen(false);
+  };
+
+  const handleDeleteSkill = async (skillId) => {
+    try {
+      await skillService.deleteSkill(skillId);
+      fetchMySkills();
+    } catch (error) {
+      console.error('Error deleting skill:', error);
+    }
+  };
 
   const handleEditClick = (skill) => {
     setSelectedSkill(skill);
@@ -72,15 +123,32 @@ const MySkills = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {offeredSkills.map((skill, index) => (
-                <MySkillCard 
-                  key={index} 
-                  {...skill} 
-                  isOffer={true} 
-                  onEdit={() => handleEditClick(skill)}
-                  onViewCurriculum={() => handleViewCurriculum(skill.title)}
-                />
-              ))}
+              {loading ? (
+                <div className="col-span-full text-center py-8">
+                  <div className="text-slate-500 dark:text-[#92c9a4]">Loading skills...</div>
+                </div>
+              ) : offeredSkills.length > 0 ? (
+                offeredSkills.map((skill) => (
+                  <MySkillCard 
+                    key={skill.id} 
+                    {...skill} 
+                    isOffer={true} 
+                    onEdit={() => handleEditClick(skill)}
+                    onViewCurriculum={() => handleViewCurriculum(skill.title)}
+                    onDelete={() => handleDeleteSkill(skill.id)}
+                  />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-8">
+                  <div className="text-slate-500 dark:text-[#92c9a4] mb-4">No skills added yet</div>
+                  <button 
+                    onClick={() => setIsAddModalOpen(true)}
+                    className="text-primary hover:underline"
+                  >
+                    Add your first skill
+                  </button>
+                </div>
+              )}
             </div>
           </section>
 
@@ -127,7 +195,8 @@ const MySkills = () => {
 
       <AddSkillModal 
         isOpen={isAddModalOpen} 
-        onClose={() => setIsAddModalOpen(false)} 
+        onClose={() => setIsAddModalOpen(false)}
+        onSkillAdded={handleSkillAdded}
       />
 
       <CurriculumModal 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MySkillCard = ({ title, level, icon, detail, status, isOffer = true, onEdit, onViewCurriculum }) => {
+const MySkillCard = ({ title, level, icon, detail, status, isOffer = true, onEdit, onViewCurriculum, onDelete }) => {
   return (
     <div className={`bg-white dark:bg-[#193322] border ${isOffer ? 'border-slate-200 dark:border-[#23482f]' : 'border-dashed border-slate-200 dark:border-[#23482f]'} rounded-2xl p-5 shadow-sm hover:shadow-md transition-all group font-['Lexend']`}>
       <div className="flex justify-between items-start mb-4">
@@ -14,7 +14,10 @@ const MySkillCard = ({ title, level, icon, detail, status, isOffer = true, onEdi
           >
             <span className="material-symbols-outlined text-xl">edit</span>
           </button>
-          <button className="p-2 text-slate-400 hover:text-red-500 transition-colors cursor-pointer">
+          <button 
+            onClick={onDelete}
+            className="p-2 text-slate-400 hover:text-red-500 transition-colors cursor-pointer"
+          >
             <span className="material-symbols-outlined text-xl">delete</span>
           </button>
         </div>
