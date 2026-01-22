@@ -37,9 +37,14 @@ const UserNavbar = ({ userName }) => {
           </div>
 
           <div className="h-10 w-10 rounded-full border-2 border-[#13ec5b] overflow-hidden ml-2">
-            <img className="w-full h-full object-cover cursor-pointer" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="Profile"
-            onClick={navigate('/my-profile')} />
-          </div>
+  <img 
+    className="w-full h-full object-cover cursor-pointer" 
+    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" 
+    alt="Profile"
+    /* Wrap the navigate call in an arrow function */
+    onClick={() => navigate('/my-profile')} 
+  />
+</div>
         </div>
       </div>
     </header>
