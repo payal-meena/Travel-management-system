@@ -10,6 +10,8 @@ const RegisterForm = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -67,11 +69,17 @@ const RegisterForm = () => {
             className="w-full bg-transparent border-0 border-b border-white/10 text-white py-3 px-1 text-sm font-light focus:ring-0 focus:outline-none focus:border-primary transition-all duration-300" 
             id="password" 
             placeholder="••••••••" 
-            type="password"
+            type={showPassword ? "text" : "password"} 
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="absolute right-2 top-1/2 -translate-y-1/2 text-white/30 hover:text-primary transition-colors" type="button">
-            <span className="material-symbols-outlined text-[20px]">visibility</span>
+          <button 
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-white/30 hover:text-primary transition-colors" 
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              {showPassword ? 'visibility_off' : 'visibility'}
+            </span>
           </button>
         </div>
       </div>
