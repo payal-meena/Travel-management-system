@@ -3,14 +3,14 @@ const User = require("../models/User.js");
 
 const addSkill = async (req, res) => {
   try {
-    const { skillName, level, type, experience, catogory, description } = req.body;
+    const { skillName, level, type, experience, category, description } = req.body;
     const userId = req.user;
 
     // Validate required fields
-    if (!skillName || !level || !catogory) {
+    if (!skillName || !level || !category) {
       return res.status(400).json({ 
         success: false,
-        message: "Missing required fields: skillName, level, and catogory are required" 
+        message: "Missing required fields: skillName, level, and category are required" 
       });
     }
 
@@ -20,7 +20,7 @@ const addSkill = async (req, res) => {
       type: type || "",
       experience: experience || "",
       userId,
-      catogory,
+      category,
       thumbnail: req.file ? req.file.path : "https://via.placeholder.com/300",
       description: description || ""
     });
