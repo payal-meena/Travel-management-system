@@ -4,15 +4,16 @@ const router = express.Router();
 const {
   addSkill,
   getMySkills,
-  getUserSkills,
   deleteSkill,
+  updateSkill
 } = require("../controllers/skillController");
 
-// const auth = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
-router.post("/",  addSkill);
-router.get("/my", getMySkills);
-router.get("/user/:userId", getUserSkills);
-router.delete("/:id",  deleteSkill);
+// 🔐 PROTECTED ROUTES
+router.post("/", protect, addSkill);
+router.get("/my", protect, getMySkills);
+router.put("/:id", protect, updateSkill);
+router.delete("/:id", protect, deleteSkill);
 
 module.exports = router;
