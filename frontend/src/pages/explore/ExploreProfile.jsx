@@ -23,24 +23,25 @@ const ExploreProfile = () => {
       <div className="w-full max-w-3xl mb-4">
         <button 
           onClick={() => window.history.back()} 
-          className="text-[#22c55e] hover:brightness-125 flex items-center gap-2 transition-all font-black text-sm uppercase tracking-widest"
+          className="text-[rgb(19,236,91)] hover:brightness-125 flex items-center gap-2 transition-all font-black text-sm uppercase tracking-widest"
         >
           <span className="text-xl">←</span> Back
         </button>
       </div>
 
-      {/* Main Profile Card - Width reduced for a more compact feel */}
+      {/* Main Profile Card */}
       <div className="w-full max-w-3xl bg-[#0a1a11] rounded-[2rem] border-2 border-white/5 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)]">
         
-        {/* Banner Section - More vibrant gradient */}
-        <div className="relative h-40 bg-gradient-to-r from-[#052e16] via-[#22c55e] to-[#064e3b]">
+        {/* Banner Section - Updated Gradient with new Green */}
+        <div className="relative h-40 bg-gradient-to-r from-[#052e16] via-[rgb(19,236,91)] to-[#064e3b]">
           <div className="absolute -bottom-14 left-8 md:left-12 p-1 bg-[#0a1a11] rounded-full shadow-2xl">
             <img 
               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200&h=200" 
               alt="Profile" 
-              className="w-28 h-28 rounded-full border-2 border-[#22c55e] object-cover"
+              className="w-28 h-28 rounded-full border-2 border-[rgb(19,236,91)] object-cover"
             />
-            <div className="absolute bottom-2 right-2 w-5 h-5 bg-[#22c55e] border-4 border-[#0a1a11] rounded-full animate-pulse"></div>
+            {/* Online Indicator */}
+            <div className="absolute bottom-2 right-2 w-5 h-5 bg-[rgb(19,236,91)] border-4 border-[#0a1a11] rounded-full animate-pulse"></div>
           </div>
         </div>
 
@@ -61,28 +62,28 @@ const ExploreProfile = () => {
                 </div>
               </div>
 
-              {/* BIO BOX - More Highlighted */}
+              {/* BIO BOX */}
               <div className="bg-gradient-to-br from-white/[0.07] to-transparent p-5 rounded-2xl border border-white/10 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1 h-full bg-[#22c55e]"></div>
-                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-2 text-[#22c55e]">Profile Bio</h3>
+                <div className="absolute top-0 left-0 w-1 h-full bg-[rgb(19,236,91)]"></div>
+                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] mb-2 text-[rgb(19,236,91)]">Profile Bio</h3>
                 <p className="text-gray-200 leading-snug text-lg font-medium">
                   "{profileData.bio}"
                 </p>
               </div>
 
-              {/* SKILLS SECTION - HIGH CONTRAST */}
+              {/* SKILLS SECTION */}
               <div className="space-y-8">
                 {/* Teaching Skills */}
                 <div className="group">
-                  <div className="inline-flex items-center gap-2 mb-4 bg-[#22c55e] px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                  <div className="inline-flex items-center gap-2 mb-4 bg-[rgb(19,236,91)] px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(19,236,91,0.3)]">
                     <span className="material-symbols-outlined text-[18px] text-[#05160e] font-black">school</span>
                     <h3 className="text-[12px] font-black uppercase tracking-widest text-[#05160e]">I Can Teach</h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {profileData.offeredSkills.map((skill, index) => (
-                      <div key={index} className="px-4 py-2 bg-white/5 border border-[#22c55e]/30 rounded-xl flex items-center gap-3 hover:bg-[#22c55e]/10 transition-colors">
+                      <div key={index} className="px-4 py-2 bg-white/5 border border-[rgb(19,236,91)]/30 rounded-xl flex items-center gap-3 hover:bg-[rgb(19,236,91)]/10 transition-colors">
                         <span className="font-bold text-white text-md">{skill.name}</span>
-                        <span className="text-[9px] font-black bg-[#22c55e] text-[#05160e] px-1.5 py-0.5 rounded uppercase">
+                        <span className="text-[9px] font-black bg-[rgb(19,236,91)] text-[#05160e] px-1.5 py-0.5 rounded uppercase">
                           {skill.level}
                         </span>
                       </div>
@@ -111,7 +112,7 @@ const ExploreProfile = () => {
             <div className="md:col-span-5 flex flex-col gap-4">
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-4 bg-white/5 rounded-2xl border border-white/10 text-center">
-                  <p className="text-3xl font-black text-[#22c55e]">100%</p>
+                  <p className="text-3xl font-black text-[rgb(19,236,91)]">100%</p>
                   <p className="text-[9px] text-gray-400 uppercase font-black tracking-tighter">Response</p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-2xl border border-white/10 text-center">
@@ -122,18 +123,18 @@ const ExploreProfile = () => {
 
               {/* ACTION AREA */}
               <div className="bg-gradient-to-b from-white/10 to-transparent p-5 rounded-[2rem] border border-white/10">
-                <button className="w-full py-3.5 bg-[#22c55e] text-[#05160e] font-black text-md rounded-xl hover:scale-[1.02] transition-transform active:scale-95 shadow-[0_10px_20px_rgba(34,197,94,0.2)]">
+                <button className="w-full py-3.5 bg-[rgb(19,236,91)] text-[#05160e] font-black text-md rounded-xl hover:scale-[1.02] transition-transform active:scale-95 shadow-[0_10px_20px_rgba(19,236,91,0.2)]">
                   CONNECT NOW
                 </button>
                 <div className="flex items-center justify-center gap-2 mt-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-ping"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[rgb(19,236,91)] animate-ping"></span>
                   Active Now
                 </div>
               </div>
 
               {/* Trust Badge */}
-              <div className="p-4 bg-[#22c55e]/5 border border-[#22c55e]/20 rounded-2xl flex items-center gap-3">
-                <span className="material-symbols-outlined text-[#22c55e]">verified</span>
+              <div className="p-4 bg-[rgb(19,236,91)]/5 border border-[rgb(19,236,91)]/20 rounded-2xl flex items-center gap-3">
+                <span className="material-symbols-outlined text-[rgb(19,236,91)]">verified</span>
                 <p className="text-[11px] font-bold text-gray-300">Verified Skills & Top Response Rate</p>
               </div>
             </div>
